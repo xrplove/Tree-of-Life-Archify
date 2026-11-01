@@ -256,7 +256,10 @@ async function runControlledWindowsPathE2E() {
     requireSuccess('repository revision discovery', revision);
     const evidenceDiagram = JSON.parse(fs.readFileSync(architectureInput, 'utf8'));
     evidenceDiagram.meta.repository = {
-      url: 'https://github.com/tt-a1i/archify',
+      // Fork-aware: the checkout origin is the fork's URL when CI runs in a fork.
+      url: process.env.GITHUB_REPOSITORY
+        ? `https://github.com/${process.env.GITHUB_REPOSITORY}`
+        : 'https://github.com/tt-a1i/archify',
       revision: revision.stdout.trim(),
     };
     evidenceDiagram.components[0].sources = [{
