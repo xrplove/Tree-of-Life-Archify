@@ -301,7 +301,8 @@ jobs:
 
   published-update-manifest:
     needs: scope
-    if: always() && !cancelled()
+    # Upstream Release tags only exist on tt-a1i/archify; forks 404.
+    if: always() && !cancelled() && github.repository == 'tt-a1i/archify'
     runs-on: ubuntu-latest
     steps:
       # Keep every required matrix check present; fail closed if classification/checks fail.
